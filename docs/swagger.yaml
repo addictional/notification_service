@@ -1,0 +1,75 @@
+basePath: /
+definitions:
+  notification.CreateNotificationRequest:
+    properties:
+      message:
+        type: string
+      user_id:
+        type: integer
+    type: object
+  notification.ListNotificationsDto:
+    properties:
+      items:
+        items:
+          $ref: '#/definitions/notification.Notification'
+        type: array
+      total:
+        type: integer
+    type: object
+  notification.Notification:
+    properties:
+      created_at:
+        type: string
+      id:
+        type: integer
+      message:
+        type: string
+      status:
+        type: string
+      user_id:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact: {}
+  description: API for the Notification Service
+  title: Notification Service API
+  version: "1.0"
+paths:
+  /notifications:
+    get:
+      consumes:
+      - application/json
+      description: List notifications
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/notification.ListNotificationsDto'
+      summary: List notifications
+      tags:
+      - notifications
+    post:
+      consumes:
+      - application/json
+      description: Create a new notification
+      parameters:
+      - description: Notification to create
+        in: body
+        name: notification
+        required: true
+        schema:
+          $ref: '#/definitions/notification.CreateNotificationRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/notification.Notification'
+      summary: Create a new notification
+      tags:
+      - notifications
+swagger: "2.0"
